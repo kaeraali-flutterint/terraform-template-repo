@@ -1,0 +1,22 @@
+---
+name: Update docs
+permissions:
+  contents: write # required to checkout the code from the repo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: main
+    - name: Render terraform docs inside the README.md and push changes back to main branch
+      uses: terraform-docs/gh-actions@v1.3.0
+      with:
+        working-dir: .
+        output-file: README.md
+        output-method: inject
+        git-push: "true"
